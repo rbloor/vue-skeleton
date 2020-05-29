@@ -3,7 +3,7 @@
     <v-navigation-drawer app v-model="drawer" class="indigo" dark disable-resize-watcher>
       <v-list>
         <template v-for="(item, index) in items">
-          <v-list-item :key="index" :to="item.route">
+          <v-list-item :key="index" :to="item.link">
             <v-list-item-content>
               {{ item.title }}
             </v-list-item-content>
@@ -19,7 +19,7 @@
       <v-toolbar-title>Recipe Book</v-toolbar-title>
       <v-spacer class="hidden-sm-and-down"></v-spacer>
       <template v-for="(item, index) in items">
-        <v-btn :key="index" :to="item.route" text class="hidden-sm-and-down">{{ item.title }}</v-btn>
+        <v-btn :key="index" :to="item.link" text class="hidden-sm-and-down">{{ item.title }}</v-btn>
       </template>
     </v-app-bar>
   </span>
@@ -32,10 +32,10 @@ export default {
     return {
       drawer: false,
       items: [
-        { title: "Home", route: "/" },
-        { title: "Login", route: "Login" },
-        { title: "Register", route: "Register" },
-        { title: "Dashboard", route: "Dashboard" }
+        { title: "Home", link: "/" },
+        { title: "Login", link: { name: "Login" } },
+        { title: "Register", link: { name: "Register" } },
+        { title: "Dashboard", link: { name: "Dashboard" } }
       ]
     }
   }
