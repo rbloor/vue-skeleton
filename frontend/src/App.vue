@@ -11,16 +11,13 @@
 <script>
 import AppNavigation from "@/components/AppNavigation"
 import AppFooter from "@/components/AppFooter"
+
 export default {
   name: "App",
 
   components: {
     AppNavigation,
     AppFooter
-  },
-
-  data: () => ({
-    //
-  })
+  }
 }
 </script>

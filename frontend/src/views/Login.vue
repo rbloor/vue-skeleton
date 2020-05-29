@@ -9,13 +9,19 @@
           </v-toolbar>
           <v-card-text>
             <v-form>
-              <v-text-field :error-messages="errors.email" label="Email" prepend-icon="mdi-email" type="text"></v-text-field>
-              <v-text-field :error-messages="errors.password" label="Password" prepend-icon="mdi-lock" type="password"></v-text-field>
+              <v-text-field v-model="form.email" :error-messages="errors.email" label="Email" prepend-icon="mdi-email" type="email"></v-text-field>
+              <v-text-field
+                v-model="form.password"
+                :error-messages="errors.password"
+                label="Password"
+                prepend-icon="mdi-lock"
+                type="password"
+              ></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary">Login</v-btn>
+            <v-btn @click.prevent="login" color="primary">Login</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -24,14 +30,32 @@
 </template>
 
 <script>
+import User from "../apis/User"
+
 export default {
-  name: "Login",
   data() {
     return {
-      form: {},
-      errors: {
-        email: "Email is a required field"
-      }
+      form: {
+        email: "",
+        password: ""
+      },
+      errors: {}
+    }
+  },
+
+  methods: {
+    login() {
+      User.login(this.form)
+        .then(() => {
+          this.$root.$emit("login", true)
+          localStorage.setItem("auth", "true")
+          this.$router.push({ name: "Dashboard" })
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            this.errors = error.response.data.errors
+          }
+        })
     }
   }
 }
